@@ -28,9 +28,9 @@ function createElementAddClassAppend(elType, className, parent) {
 
 function createMenuItem(item) {
 
-    const MenuItemContainer = createElementAddClassAppend('div', 'testing', fragment);
+    const menuItemContainer = createElementAddClassAppend('div', 'menu-container', fragment);
 
-    const leftSideContainer = createElementAddClassAppend('div', 'left-container', MenuItemContainer)
+    const leftSideContainer = createElementAddClassAppend('div', 'left-container', menuItemContainer)
 
     const emojiIcon = createElementAddClassAppend('p', "emoji-icon", leftSideContainer);
 
@@ -39,16 +39,17 @@ function createMenuItem(item) {
     const foodItem = createElementAddClassAppend('h3', 'food-item', foodTextContainer);
 
     const foodIngredients = createElementAddClassAppend('p', 'food-ingredients', foodTextContainer);
+    
 
     const foodPrice = createElementAddClassAppend('p', 'price', foodTextContainer);
 
     
-    const addFoodToOrderIcon = createElementAddClassAppend('img', 'add-food', MenuItemContainer);
+    const addFoodToOrderIcon = createElementAddClassAppend('img', 'add-food', menuItemContainer);
     addFoodToOrderIcon.setAttribute('src', "./images/add-btn.png");
     
     emojiIcon.textContent = item.emoji;
     foodItem.textContent = item.name;
-    foodIngredients.textContent = item.ingredients;
+    foodIngredients.textContent = item.ingredients.join(', ');
     foodPrice.textContent = item.price;
 
     addFoodToOrderIcon
