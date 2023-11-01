@@ -3,6 +3,9 @@
 import menuArray from "./data.js";
 const feed = document.getElementById('feed');
 const fragment = new DocumentFragment();
+const orderContainer = document.getElementById('order-container');
+const container = document.getElementById('container');
+
 
 // Create Elements, Append and add classes functions
 function createSingleEl(elType) {
@@ -44,21 +47,13 @@ function createMenuItem(item) {
     const foodPrice = createElementAddClassAppend('p', 'price', foodTextContainer);
 
     
-    const addFoodToOrderIcon = createElementAddClassAppend('img', 'add-food', menuItemContainer);
-    addFoodToOrderIcon.setAttribute('src', "./images/add-btn.png");
+    const addFoodToOrderIcon = createElementAddClassAppend('button', 'add-food', menuItemContainer);
+    addFoodToOrderIcon.setAttribute('id', `${item.id}`);
     
     emojiIcon.textContent = item.emoji;
     foodItem.textContent = item.name;
     foodIngredients.textContent = item.ingredients.join(', ');
     foodPrice.textContent = item.price;
-
-    addFoodToOrderIcon
-    
-
-
-
-
-    
 };
 
 
@@ -75,3 +70,58 @@ render();
 feed.append(fragment);
 
 
+document.addEventListener('click', (e) => {
+    if(e.target.id) {
+
+        callAddToOrder(e.target.id)
+    }
+});
+
+function callAddToOrder(foodId) {
+    const targetObj = menuArray.filter((item) => {
+        return item.id === Number(foodId);
+    })[0];
+    console.log(targetObj);
+
+    
+    createYourOrderElements(targetObj);
+    isTotalOrder();
+};
+
+function createYourOrderElements(item) {
+    
+    const orderFoodContainer = createElementAddClassAppend('div', 'order-food-container', container)
+
+    const divContainer = createElementAddClassAppend('div', 'div-container', orderFoodContainer);
+
+    const foodItem = createElementAddClassAppend('h3', 'food-item', divContainer);
+
+    const removeBtn = createElementAddClassAppend('button', 'remove-btn', divContainer)
+
+    const foodPrice = createElementAddClassAppend('p', 'price', orderFoodContainer);
+    
+    foodItem.textContent = item.name;
+    foodPrice.textContent = item.price;
+    removeBtn.textContent = "Remove";
+};
+
+
+
+function totalOrder() {
+    
+        const totalPrice = createElementAddClassAppend('h3', 'total-price', orderContainer);
+
+        totalPrice.setAttribute('id', 'testing')
+        totalPrice.textContent = "Total Price";
+
+        const completeOrderBtn = createElementAddClassAppend('button', 'complete-order-btn', orderContainer);
+        completeOrderBtn.textContent = "Complete Order"
+};
+
+function isTotalOrder() {
+    let willItWork = document.getElementById('testing');
+
+    if(willItWork === null) {
+        totalOrder();
+    };
+};
